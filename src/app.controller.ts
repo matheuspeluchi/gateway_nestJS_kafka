@@ -1,21 +1,14 @@
-import { Controller, Get, OnModuleInit } from '@nestjs/common';
-import { EventPattern } from '@nestjs/microservices';
-import { AppService } from './app.service';
-import { AzureEventConsumer } from './infra/azure/AzureEventConsumer';
+import { Controller, Get } from "@nestjs/common";
+import { EventPattern, Payload } from "@nestjs/microservices";
+import { AppService } from "./app.service";
 
 @Controller()
-export class AppController implements OnModuleInit {
+export class AppController {
   constructor(private readonly appService: AppService) { }
 
-  onModuleInit() {
-    const consumer = new AzureEventConsumer("new-user")
-    consumer.subscription()
-
-  }
-
   @EventPattern("new-user")
-  createUser(data) {
-    console.log(data);
+  createUser(@Payload() data) {
+    console.log(data.value);
   }
 
   @Get()

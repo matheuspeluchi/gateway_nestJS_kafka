@@ -2,9 +2,9 @@ import { earliestEventPosition, EventHubConsumerClient } from "@azure/event-hubs
 import { CheckpointStore } from "./CheckpointStore";
 
 export class AzureEventConsumer {
-	public consumerClient: EventHubConsumerClient
+	private consumerClient: EventHubConsumerClient
 	private connectionString: string = process.env.AZURE_ENDPOINT
-	private consumerGroup: string = "gateway"
+	private consumerGroup = "gateway"
 	private store = new CheckpointStore();
 
 
@@ -26,7 +26,7 @@ export class AzureEventConsumer {
 					}
 
 					for (const event of events) {
-						console.log(event)
+						console.log(JSON.parse(event.body))
 						// console.log(`Received event: '${event.body}' from partition: '${context.partitionId}' and consumer group: '${context.consumerGroup}'`);
 
 					}
