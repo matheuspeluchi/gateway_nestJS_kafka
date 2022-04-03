@@ -1,7 +1,6 @@
 import { Message } from "./Message";
 
 export class NotFoundError extends Error {
-
 	private _errorMessage: Message;
 
 	constructor(message: Message) {
@@ -13,5 +12,4 @@ export class NotFoundError extends Error {
 	get errorMessage() {
 		return this._errorMessage;
 	}
-
 }

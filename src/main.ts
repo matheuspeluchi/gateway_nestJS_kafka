@@ -1,7 +1,9 @@
-import { Options } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { AppModule } from './app.module';
+import { Options, ValidationPipe } from "@nestjs/common";
+import { NestFactory } from "@nestjs/core";
+import { MicroserviceOptions, Transport } from "@nestjs/microservices";
+import { AppModule } from "./app.module";
+import { InvalidFormException } from "./common/exceptions/invalid.form.exception";
+import { Message } from "./common/Message";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,22 +12,28 @@ async function bootstrap() {
     transport: Transport.KAFKA,
     options: {
       client: {
-        clientId: 'api_gateway',
+        clientId: "api_gateway",
         brokers: [process.env.AZURE_BROKERS],
         ssl: true,
         sasl: {
-          mechanism: 'plain',
-          username: '$ConnectionString',
+          mechanism: "plain",
+          username: "$ConnectionString",
           password: process.env.AZURE_ENDPOINT,
         },
       },
       consumer: {
-        groupId: 'gateway',
+        groupId: "gateway",
       },
     },
   });
 
-  await app.startAllMicroservices();
+  // await app.startAllMicroservices();
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      exceptionFactory: (errors) => new InvalidFormException(errors),
+    })
+  );
   await app.listen(3000);
 }
 bootstrap();
