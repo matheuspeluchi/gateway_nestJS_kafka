@@ -1,27 +1,27 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable } from '@nestjs/common';
 
-import { Assertion } from "src/common/Assertion";
-import { UserService } from "src/users/controllers/UserService";
-import { User } from "../../User";
+import { Assertion } from 'src/common/Assertion';
+import { UserService } from 'src/users/controllers/UserService';
+import { User } from '../../User';
 
-import { UserRepositoty } from "src/users/UserRepository";
-import { BadRequestError } from "src/common/BadRequestError";
+import { UserRepositoty } from 'src/users/UserRepository';
+import { BadRequestError } from 'src/common/exceptions/BadRequestError';
 
 @Injectable()
 export class CreateUserService extends Assertion implements UserService {
   constructor(
-    @Inject("USER_REPOSITORY") private readonly repository: UserRepositoty
+    @Inject('USER_REPOSITORY') private readonly repository: UserRepositoty,
   ) {
     super();
   }
 
   async execute(
     newId,
-    { name, login, cpf, domain, password, authenticationType, admin }
+    { name, login, cpf, domain, password, authenticationType, admin },
   ) {
     throw new BadRequestError({
-      detail: "Teste de mensagem de erro",
-      source: "name",
+      detail: 'Teste de mensagem de erro',
+      source: 'name',
     });
 
     await this._validarLoginDuplicado(login);
@@ -37,7 +37,7 @@ export class CreateUserService extends Assertion implements UserService {
 
     if (password) user.password = password;
 
-    user.addHistoric("Criação do usuário", admin);
+    user.addHistoric('Criação do usuário', admin);
 
     return await this.repository.save(user);
   }
@@ -51,7 +51,7 @@ export class CreateUserService extends Assertion implements UserService {
     this.assertFalse(
       userWithSameLogin,
       `O nome de usuário ${login} já está registrado, não pode ser duplicado!`,
-      "login"
+      'login',
     );
   }
 }

@@ -2,14 +2,14 @@ import {
   BadRequestException,
   HttpStatus,
   ValidationError,
-} from "@nestjs/common";
-import { Message } from "../Message";
+} from '@nestjs/common';
+import { Message } from './Message';
 
 export class InvalidFormException extends BadRequestException {
   private _errors: Message[];
   private _status: number;
   constructor(errors: ValidationError[]) {
-    super("EBADREQUEST");
+    super('EBADREQUEST');
     this._status = HttpStatus.BAD_REQUEST;
     this.parseErrors(errors);
   }
