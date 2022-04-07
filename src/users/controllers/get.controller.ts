@@ -1,20 +1,20 @@
-import { Body, Controller, Inject, Post, Res } from "@nestjs/common";
-import { MessagePattern, Payload } from "@nestjs/microservices";
-import { KafkaMessage } from "@nestjs/microservices/external/kafka.interface";
-import { Response } from "express";
-import { Types } from "mongoose";
-import { UserDTO } from "./userDTO";
-import { UserService } from "./UserService";
+import { Body, Controller, Inject, Post, Res } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { KafkaMessage } from '@nestjs/microservices/external/kafka.interface';
+import { Response } from 'express';
+import { Types } from 'mongoose';
+import { UserDTO } from './userDTO';
+import { UserService } from './UserService';
 
 function nextId() {
   return new Types.ObjectId().toHexString();
 }
 
-@Controller("users")
+@Controller('users')
 export class UsersGetController {
-  constructor(@Inject("UserService") private readonly service: UserService) { }
+  constructor(@Inject('UserService') private readonly service: UserService) { }
 
-  @MessagePattern("create-user")
+  @MessagePattern('create-user')
   createUser(@Payload() message: KafkaMessage): void {
     //this.service.execute(nextId(), JSON.parse(message.value.toString()))
     console.log(message.value);

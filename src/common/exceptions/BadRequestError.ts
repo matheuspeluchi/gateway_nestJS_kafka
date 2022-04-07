@@ -3,7 +3,7 @@ import { Message } from './Message';
 
 export class BadRequestError extends Error {
   private _status: number;
-  private _errors: Array<Message>;
+  private _errors: Array<Message> = [];
 
   constructor(message: Message) {
     super(message.detail);
@@ -17,6 +17,6 @@ export class BadRequestError extends Error {
   }
 
   getError() {
-    return this._errors;
+    return { errors: this._errors };
   }
 }

@@ -19,10 +19,10 @@ export class CreateUserService extends Assertion implements UserService {
     newId,
     { name, login, cpf, domain, password, authenticationType, admin },
   ) {
-    throw new BadRequestError({
-      detail: 'Teste de mensagem de erro',
-      source: 'name',
-    });
+    // throw new BadRequestError({
+    //   detail: 'Teste de mensagem de erro',
+    //   source: 'name',
+    // });
 
     await this._validarLoginDuplicado(login);
 

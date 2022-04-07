@@ -2,7 +2,7 @@ import { HttpStatus } from '@nestjs/common';
 import { Message } from './Message';
 export class BusinessError extends Error {
   private _status: number;
-  private _errors: Array<Message>;
+  private _errors: Array<Message> = [];
 
   constructor(message: Message) {
     super(message.detail);
@@ -11,7 +11,7 @@ export class BusinessError extends Error {
     this._errors.push(message);
   }
 
-  get errorMessage() {
+  getError() {
     return { errors: this._errors };
   }
 

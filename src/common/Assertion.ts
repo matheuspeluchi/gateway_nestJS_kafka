@@ -1,4 +1,4 @@
-import { BusinessError } from './BusinessError';
+import { BusinessError } from './exceptions/BusinessError';
 import { NotFoundError } from './exceptions/NotFoundError';
 
 export class Assertion {

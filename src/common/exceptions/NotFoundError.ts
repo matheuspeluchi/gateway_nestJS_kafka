@@ -12,7 +12,7 @@ export class NotFoundError extends Error {
     this._errors.push(message);
   }
 
-  get errorMessage() {
+  getError() {
     return { errors: this._errors };
   }
 
